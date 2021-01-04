@@ -51,6 +51,8 @@ export class UserEditComponent implements OnInit {
                             localStorage.setItem('identity', JSON.stringify(this.user)); // Volvemos a actualizar 
                             var image = document.getElementById('profileImage');
                             // image.setAttribute("src", this.url + 'api/get-image-user/' + this.identity.image);
+                        }).catch((err) => {
+                            console.log(err);
                         });
 
                 } else {

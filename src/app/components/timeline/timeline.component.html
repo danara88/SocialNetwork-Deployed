@@ -1,0 +1,96 @@
+<div class="container">
+    
+    <div class="row">
+        <div class="col-lg-12 p-2 d-flex flex-direction-row align-items-center">
+            <h2 class="title"> {{ title }}</h2> 
+            <button class="btn btn-sm btn-light ml-4" (click)="refresh($event)"><i class="fas fa-sync"></i> Refrescar</button>
+        </div>
+      
+    </div>
+
+    <!-- Listado de las publicaciones -->
+    <div class="row people">
+        <div class="col-lg-8" >
+            <div class="row">
+                <div class="col-12 publications">
+
+                    <!-- Dibujo de no publicaciones -->
+                    <div class="drawing" *ngIf="publications && publications.length === 0">
+                        <img class="drawing__img" src="./assets/img/iconos/no-posts.svg" alt="Dibujo de no publicaciones">
+                        <span class="drawing__text-primary">No hay publicaciones</span>
+                        <span class="drawing__text-secondary">¡ Empieza a seguir a nueva gente !</span>
+                        <a routerLink="/gente" class="btn btn-sm btn-success my-2">Seguir gente</a>
+                    </div>
+
+                    <div class="card mb-2 publication" *ngFor="let publication of publications">
+                        <div class="card-body">
+                            <button type="button" class="float-right trash-btn trashBtn text-muted" *ngIf="publication.user._id == identity._id" data-toggle="modal" data-target="#exampleModal" (click)="showModal(publication._id)"><i class="fas fa-trash"></i></button>
+
+                            <!-- Modal -->
+                            <div class="modal fade" id="exampleModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true" *ngIf="show == publication._id">
+                                <div class="modal-dialog" role="document">
+                                <div class="modal-content">
+                                    <div class="modal-header">
+                                    <h5 class="modal-title" id="exampleModalLabel">Borrar publicación</h5>
+                                    <button type="button" class="close" data-dismiss="modal" aria-label="Close">
+                                        <span aria-hidden="true">&times;</span>
+                                    </button>
+                                    </div>
+                                    <div class="modal-body">
+                                        ¿Estás seguro de borrar esta publicación? 
+                                    </div>
+                                    <div class="modal-footer">
+                                    <button type="button" class="btn btn-secondary btn-sm" data-dismiss="modal">Close</button>
+                                    <button type="button" class="btn btn-danger btn-sm" (click)="deletePublication(publication._id)" data-dismiss="modal">Eliminar</button>
+                                    </div>
+                                </div>
+                                </div>
+                            </div>
+
+                            <div class="head">
+                                <div class="image-user" *ngIf="!publication.user.image">
+                                    <img src="assets/img/default.jpeg" alt="">
+                                </div>
+                                <div class="image-user" *ngIf="publication.user.image">
+                                    <img src="{{ url + 'api/get-image-user/' + publication.user.image }}" alt="">
+                                </div>
+                                <div class="user-info">
+                                    <h5 class="card-title"><a [routerLink]="['/perfil', publication.user._id]">{{ publication.user.name + ' ' + publication.user.surname }}</a></h5>
+                                    <h6 class="card-subtitle mb-2 text-muted">{{ publication.user.nick }}</h6>
+                                </div>
+                           
+                           </div>
+                          <p class="card-text">{{ publication.text }}</p>
+
+                          <div *ngIf="publication.file != 'null'">
+                            <button class="btn btn-success btn-sm float-right" (click)="showThisImage(publication._id)" *ngIf="showImage != publication._id"><i class="fas fa-image"></i></button>
+                            <button class="btn btn-danger btn-sm float-right" (click)="hideThisImage()" *ngIf="showImage == publication._id"><i class="fas fa-minus"></i></button>
+
+                            <div class="image-publication" *ngIf="showImage == publication._id" id="publicationImage">
+                                <img src="{{ url + 'api/get-image-publication/' + publication.file }}" alt="">
+                            </div>
+                          </div>
+                         
+                        </div>
+                        <span class="ml-auto date text-muted ">{{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</span>
+                      </div>
+
+                </div>
+
+                <!-- Boton para cargar más publicaciones -->
+                <div class="col-12 text-center" *ngIf="publications && publications.length">
+                    <button class="btn btn-light btn-sm my-4"  (click)="viewMore()" *ngIf="!noMore"> <i class="fas fa-spinner"></i> Cargar más</button>
+                </div>
+
+            </div>
+        </div>
+        <div class="col-lg-4 sidebar">
+            <sidebar (sent)="refresh($event)"></sidebar>
+        </div>
+    </div>
+
+   
+
+    
+
+</div>

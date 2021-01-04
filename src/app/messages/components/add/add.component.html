@@ -1,0 +1,63 @@
+<div class="container">
+
+    <div class="row">
+        <div class="col-lg-12">
+            <h2 class="title"> {{ title }}</h2> 
+        </div>
+    </div>
+
+    <div class="row">
+        <div class="col-lg-12">
+            <form #messageForm="ngForm" (ngSubmit)="onSubmit(messageForm)" class="form-publication">
+                <div class="group-publication">
+                    <label for="selectId"> Personas: <small class="text-muted">Solo puedes enviar mensajes a personas que sigues y que te siguen</small> </label>
+                    <select *ngIf="follows" name="receiver" #receiver="ngModel" [(ngModel)]="message.receiver" id="selectId" required>
+                        <option *ngFor="let follow of follows" value="{{ follow.user._id }}">
+                            {{ follow.user.name + ' ' + follow.user.surname + ' ' + '(' + follow.user.nick + ')'}}
+                        </option>
+                        <span class="error-message loginRegister" *ngIf="!receiver.valid && receiver.touched"> * Campo obligatorio </span> 
+                    </select>
+                    
+                </div>
+                   <div class="group-publication mt-2">
+                       <textarea placeholder="Mensaje" #text="ngModel" name="text"  [(ngModel)]="message.text" required></textarea>
+                       <span class="error-message loginRegister" *ngIf="!text.valid && text.touched"> * Campo obligatorio </span>
+                   </div>
+                   <!-- <div class="file-div">
+                       <span class="uplaod-file">
+                           <i class="fas fa-paperclip"></i>
+                           <span class="text-muted text">Subir imagen</span>
+                        </span>
+                       <input type="file" class="file-input" name="image">
+                   </div> -->
+                   <button class="btn btn-primary btn-sm" type="submit" [disabled]="!messageForm.form.valid">Enviar mensaje</button>
+               </form>
+        </div>
+    </div>
+
+</div>
+
+
+
+
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-success fixed-top text-center" *ngIf="status && status == 'success' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Se ha enviado correctamente tu mensaje. Velo en <a [routerLink]="['/mensajes/enviados']">mensajes enviados</a></span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'error' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> No se ha podido enviar el mensaje. Vuelve a intentarlo más tarde.</span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'errorServer' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Se ha producido un error. Vuelve a intentarlo más tarde. </span>
+</div>
+<!-- -----  -->

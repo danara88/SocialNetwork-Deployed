@@ -1,0 +1,57 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			
+			
+		<form #loginForm = "ngForm" (ngSubmit)="onSubmit()" class="register-login">
+			<div class="head">
+				Bienvenido a <b>Red</b> Social
+			</div>	
+			<span class="title"> Iniciar sesión </span>
+			<div class="groups">
+
+			
+				
+				<div class="group">
+					<i class="icon fas fa-envelope"></i>
+					<input type="email" placeholder="Correo electrónico" #email="ngModel" name="email" [(ngModel)]="user.email" pattern="[a-z0-9._%+-]+@[a-z0-9.-]+\.[a-z]{2,}$" required >
+					
+				</div>	
+
+				<div class="group">
+					<i class="icon fas fa-lock"></i>
+					<input type="password" placeholder="Contraseña" #password="ngModel" name="password" [(ngModel)]="user.password" required>
+					
+				</div>
+			</div>
+				
+				<button class="btn btn-primary" type="submit" [disabled]="!loginForm.form.valid">Entrar</button>
+		</form>
+		
+
+		</div>
+	</div>
+</div>
+
+
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-success fixed-top text-center" *ngIf="status && status == 'success' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Inicio de sesión correcto</span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'failNoResults' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Correo o contraseña incorrectas </span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'fail' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Correo o contraseña incorrectas </span>
+</div>
+<!-- -----  -->

@@ -1,0 +1,82 @@
+<div class="container" *ngIf="user">
+    
+    <div class="row">
+        <div class="col-lg-12 p-2 d-flex flex-direction-row align-items-center">
+            <h2 class="title"> {{ title }}</h2> 
+        </div>
+    </div>
+
+    <div class="row people">
+        
+        <div class="col-lg-8" >
+            <div class="row">
+                <div class="col-12 head-profile">
+                    <div class="image-user" *ngIf="user && !user.image">
+                        <img src="assets/img/default.jpeg" alt="">
+                    </div>
+                    <div class="image-user" *ngIf="user && user.image">
+                        <img src="{{ url + 'api/get-image-user/' + user.image }}" alt="">
+                    </div>
+
+                    <div class="info-profile">
+                        <span class="user-profile-name">{{ user.name + ' ' + user.surname }}</span>
+                        <span class="user-profile-nick text-muted">{{ user.nick }}</span>
+
+                        <div class="stats">
+                            <div class="container">
+                                <div class="row">
+                                    <div class="col-4 border-right"  (click)="linkToFollowing()">
+                                        <span>Siguiendo</span>
+                                        <span class="number">{{ stats.following }}</span>
+                                    </div>
+                                    <div class="col-4 border-right" (click)="linkToFollowed()">
+                                        <span>Siguidores</span>
+                                        <span class="number">{{ stats.followed }}</span>
+                                    </div>
+                                    <div class="col-4">
+                                        <span>Publicaciones</span>
+                                        <span class="number">{{ stats.publications }}</span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </div>
+
+                    <div class="btns" *ngIf="user._id != identity._id">
+                        <span class="message" *ngIf="followed">Te sigue</span>
+                        <button class="btn btn-sm btn-primary mt-3" *ngIf="!following" (click)="followUser(user._id)"> <i class="fas fa-plus mr-1"></i> Seguir </button>
+                        <button 
+                        class="btn btn-sm btn-primary mt-3" 
+                        *ngIf="following" (click)="unfollowUser(user._id)"
+                        (mouseenter)="mouseEnter(user._id)"
+                        (mouseleave)=" mouserLeave()"
+                        [class.btn-danger]="user._id == followUserOver"
+                        > 
+                            <span *ngIf="user._id == followUserOver; else following">
+                                 <i class="fas fa-times mr-1"></i> Dejar de seguir
+                            </span>
+
+                            <ng-template #following>
+                                <span> <i class="fas fa-check mr-1"></i> Siguiendo</span>
+                            </ng-template>
+
+                        </button>
+                    </div>
+
+                </div>
+                
+             
+            </div>
+
+           <!-- Componente de publicaciones -->
+                <publications [userId]="user._id"></publications>
+        </div>
+
+        <div class="col-lg-4 sidebar">
+            <!-- Componente del sidebar -->
+            <sidebar></sidebar>
+        </div>
+
+    </div>
+
+</div>

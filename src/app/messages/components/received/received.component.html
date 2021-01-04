@@ -1,0 +1,48 @@
+<div class="container">
+    <div class="row">
+        <div class="col-lg-12 mb-2">
+            <h2 class="title"> {{ title }}</h2> 
+        </div>
+    </div>
+    <div class="row people" *ngIf="messages">
+        <div class="col-lg-12" >
+
+            <!-- Dibujo -->
+            <div class="drawing" *ngIf="messages && messages.length === 0">
+              <img class="drawing__img" src="./assets/img/iconos/conversation.svg" alt="Dibujo de caja vacía">
+              <span class="drawing__text-primary">No tienes mensajes recibidos</span>
+              <span class="drawing__text-secondary">¡ Entabla una conversación ahora !</span>
+              <a routerLink="/mensajes/enviar" class="btn btn-sm btn-success my-2">Iniciar conversación</a>
+            </div>
+
+            <div class="row">
+                <div class="col-lg-12 card person" *ngFor="let message of messages">
+                    <div class="card-body">
+                        <div class="image-user" *ngIf="message.emmitter.image">
+                            <img src="{{ url + 'api/get-image-user/' + message.emmitter.image }}" alt="">
+                        </div>
+                        <div class="image-user" *ngIf="!message.emmitter.image">
+                            <img src="assets/img/default.jpeg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <a [routerLink]="['/perfil', message.emmitter._id]" class="user-name">{{ message.emmitter.name + ' ' + message.emmitter.surname }}</a>
+                            <span class="text-muted"> {{ message.emmitter.nick }} </span>
+                            <span class="text-muted date">{{ (message.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</span>
+                        </div>
+                        <p class="text float-right ml-4">{{ message.text }}</p>
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="col-lg-12">
+                        <div class="btns-pagination mt-4">
+                            <a [routerLink]="['/mensajes/recibidos', prevPage]" *ngIf="page > 1"    class="float-left btn btn-light btn-sm">Anterior</a>
+                            <a [routerLink]="['/mensajes/recibidos', nextPage]" *ngIf="pages !== page" class="float-right btn btn-light btn-sm">Siguiente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</div>

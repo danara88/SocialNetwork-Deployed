@@ -1,0 +1,61 @@
+<div class="container">
+    
+    <div class="row" *ngIf="user">
+        <div class="col-lg-12">
+            <h2 class="title"> Seguidores de {{ user.name + ' ' + user.surname }} </h2> 
+        </div>
+    </div>
+
+    <!-- Listado de las personas -->
+    <div class="row people" *ngIf="followed">
+        <div class="col-lg-8" >
+            <div class="row">
+                <div class="col-lg-12 card person" *ngFor="let follow of followed">
+                    <div class="card-body">
+                        <div class="image-user" *ngIf="follow.user.image">
+                            <img src="{{ url + 'api/get-image-user/' + follow.user.image }}" alt="">
+                        </div>
+                        <div class="image-user" *ngIf="!follow.user.image">
+                            <img src="assets/img/default.jpeg" alt="">
+                        </div>
+                        <div class="user-info">
+                            <a [routerLink]="['/perfil', follow.user._id]" class="user-name">{{ follow.user.name + ' ' + follow.user.surname }}</a>
+                            <span class="text-muted"> {{ follow.user.nick }}</span>
+                        </div>
+<!-- AQUI ESTAN LOS BOTONES DE SEGUIR Y DEJAR DE SEGUIR -->
+                        <div class="btns-follow" *ngIf="follow.user._id != identity._id">
+                            <button class="btn btn-light btn-sm" *ngIf="follows.indexOf(follow.user._id) < 0" (click)="followUser(follow.user._id)"><i class="fas fa-plus"></i> Seguir </button>
+
+                            <button class="btn btn-dark btn-sm"  *ngIf="follows.indexOf(follow.user._id) >= 0" (click)="unfollowUser(follow.user._id)">
+                                <span>
+                                    <i class="fas fa-minus" ></i>  
+                                    Dejar de seguir
+                                 </span>
+                            </button>
+
+                        </div>
+                       
+                    </div>
+                </div>
+            </div>
+            <div class="row">
+                <div class="container">
+                    <div class="col-lg-12">
+                        <div class="btns-pagination mt-4">
+                            <a [routerLink]="['/seguidores', user_page_id, prevPage]" *ngIf="page != 1" class="float-left btn btn-light btn-sm">Anterior</a>
+                            <a [routerLink]="['/seguidores', user_page_id, nextPage]" *ngIf="pages != page" class="float-right btn btn-light btn-sm">Siguiente</a>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+        <div class="col-lg-4 sidebar">
+            <sidebar></sidebar>
+        </div>
+    </div>
+
+   
+
+    
+
+</div>

@@ -1,0 +1,36 @@
+<div class="col-12 publications mt-5">
+
+    <div class="drawing" *ngIf="publications && publications.length === 0">
+          <img class="drawing__img" src="./assets/img/iconos/empty-box.svg" alt="Dibujo de caja vacía">
+          <span class="drawing__text-primary">No hay publicaciones</span>
+    </div>
+
+    <div class="card mb-2 publication" *ngFor="let publication of publications">
+        <div class="card-body">
+            <div class="head">
+                <div class="image-user" *ngIf="!publication.user.image">
+                    <img src="assets/img/default.jpeg" alt="">
+                </div>
+                <div class="image-user" *ngIf="publication.user.image">
+                    <img src="{{ url + 'api/get-image-user/' + publication.user.image }}" alt="">
+                </div>
+                <div class="user-info">
+                    <h5 class="card-title">{{ publication.user.name + ' ' + publication.user.surname }}</h5>
+                    <h6 class="card-subtitle mb-2 text-muted">{{ publication.user.nick }}</h6>
+                </div>
+           </div>
+          <p class="card-text">{{ publication.text }}</p>
+
+          <div class="image-publication" *ngIf="publication.file != 'null'">
+              <img src="{{ url + 'api/get-image-publication/' + publication.file }}" alt="">
+          </div>
+        </div>
+        <span class="ml-auto date text-muted ">{{ (publication.created_at | amFromUnix) | amLocale: 'es' | amTimeAgo }}</span>
+      </div>
+</div>
+
+<!-- Boton para cargar más publicaciones -->
+<div class="col-12 text-center" *ngIf="publications && publications.length">
+    <button class="btn btn-light btn-sm my-4"  (click)="viewMore()" *ngIf="!noMore"> <i class="fas fa-spinner"></i> Cargar más</button>
+</div>
+

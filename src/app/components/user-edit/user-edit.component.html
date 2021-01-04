@@ -1,0 +1,68 @@
+<div class="container">
+	<div class="row">
+		<div class="col-lg-12">
+			<h2 class="title-edit"> {{ title }}</h2> 
+		</div>
+    </div>
+    <div class="row">
+        <div class="col-lg-12">
+            <form #userEditForm="ngForm" (ngSubmit)="onSubmit()" class="edit">
+                <div class="group">
+                    <span class="name">Nombre:</span>
+                    <input type="text" name="name" placeholder="Nombre completo" #name="ngModel" [(ngModel)]="user.name" required>
+                    <span class="form-error-edit" *ngIf="name.touched && !name.value"> *Campo obligatorio </span>
+                </div>
+
+                <div class="group">
+                    <span class="name">Apellidos:</span>
+                    <input type="text" name="surname"  placeholder="Tus apellidos" #surname="ngModel" [(ngModel)]="user.surname" required>
+                    <span class="form-error-edit" *ngIf="surname.touched && !surname.value"> *Campo obligatorio </span>
+                </div>
+
+                <div class="group">
+                    <span class="name">Nick:</span>
+                    <input type="text" name="nick" #nick="ngModel"  placeholder="Tu nombre de usuario" [(ngModel)]="user.nick" required>
+                    <span class="form-error-edit" *ngIf="nick.touched && !nick.value"> *Campo obligatorio </span>
+                </div>
+
+                <div class="group">
+                    <span class="name">Correo electrónico:</span>
+                    <input type="text" name="email" #email="ngModel"  placeholder="Tu correo electrónico" [(ngModel)]="user.email" required>
+                    <span class="form-error-edit" *ngIf="email.touched && !email.value"> *Campo obligatorio </span>
+                </div>
+
+                <div class="group">
+                    <span class="name">Foto de perfil:</span>
+                    <input type="file" name="image" placeholder="Subir foto de perfil" (change)="fileChangeEvent($event)">
+                </div>
+
+                <div class="profile-image" *ngIf="identity && identity.image">
+                    <img src="{{ url + 'api/get-image-user/' + identity.image }}" alt="Imagen de {{ user.name + ' ' +user.surname }}">
+                </div>
+
+                <input type="submit" value="Guardar cambios" class="btn btn-primary mt-4" [disabled]="!userEditForm.form.valid">
+            </form>
+        </div>
+    </div>
+</div>
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-success fixed-top text-center" *ngIf="status && status == 'success' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Se han actualizado los datos correctamente. </span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'error' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> No se ha podido actualizar tus datos. </span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'errorServer' ">
+	<span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+	<span> Se ha producido un error. Vuelve a intentarlo más tarde. </span>
+</div>
+<!-- -----  -->

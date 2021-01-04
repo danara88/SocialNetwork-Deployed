@@ -1,0 +1,75 @@
+
+<div class="siderbar">
+<div class="sidebar-container">
+    <div class="stats">
+        <div class="head-stats">
+            <div class="image-user" *ngIf="!identity.image">
+                <img src="assets/img/default.jpeg" alt="">
+            </div>
+            <div class="image-user" *ngIf="identity.image">
+                <img src="{{ url + 'api/get-image-user/' + identity.image }}" alt="">
+            </div>
+            <div class="info-user">
+                <span class="name"><a [routerLink]="['/perfil', identity._id]">{{ identity.name + ' ' + identity.surname }}</a></span>
+                <span class="text-muted nick">{{ identity.nick }}</span>
+            </div>
+        </div>
+        <div class="body-stats">
+            <div class="container">
+                <div class="row">
+                    <div class="col-4 border-right" (click)="linkToFollowing()">
+                        <span>Siguiendo</span>
+                        <span class="number">{{ stats.following }}</span>
+                    </div>
+                    <div class="col-4 border-right" (click)="linkToFollowed()">
+                        <span>Siguidores</span>
+                        <span class="number">{{ stats.followed }}</span>
+                    </div>
+                    <div class="col-4" (click)="linkToProfile()">
+                        <span>Publicaciones</span>
+                        <span class="number">{{ stats.publications }}</span>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div> 
+</div>
+
+<div class="sidebar-container">
+   <form #publicationForm="ngForm" (ngSubmit)="onSubmit(publicationForm, $event);" class="form-publication">
+    <span>Dile al mundo lo que piensas !</span>
+       <div class="group-publication">
+           <textarea name="" placeholder="¿En qué estas pensando hoy {{ identity.name }}?" #text="ngModel" name="text"  [(ngModel)]="publication.text" required></textarea>
+       </div>
+       <div class="file-div">
+           <span class="uplaod-file">
+               <i class="fas fa-paperclip"></i>
+               <span class="text-muted text">Subir imagen</span>
+            </span>
+           <input type="file" class="file-input" (change)="fileChangeEvent($event)" name="image">
+       </div>
+       <button class="btn btn-primary btn-sm" type="submit" [disabled]="!publicationForm.form.valid">Publicar</button>
+   </form>
+</div>
+</div>
+
+<!-- MENSAJE DE EXITO  -->
+<div class="alert alert-success fixed-top text-center"  *ngIf="status && status == 'success'">
+    <span class="close" (click)="closeMessage()"><i class="fas fa-times float-right" ></i></span>
+    <span>  Publicado con exito <i class="fas fa-check"></i></span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE ERROR  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'NoResults' ">
+    <span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+    <span> Ups! Algo salió mal. Vuelve a intentarlo más tarde </span>
+</div>
+<!-- -----  -->
+
+<!-- MENSAJE DE ERROR  -->
+<div class="alert alert-danger fixed-top text-center" *ngIf="status && status == 'error' ">
+    <span class="close" (click)="closeMessage()"><i class="fas fa-times float-right"></i></span>
+    <span> Se ha producido un error en el servidor. Vuelve a intentarlo más tarde </span>
+</div>
+<!-- -----  -->

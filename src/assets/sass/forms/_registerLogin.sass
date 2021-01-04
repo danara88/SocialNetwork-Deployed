@@ -1,0 +1,67 @@
+/*  GENERAL  */
+.error-message
+	&.loginRegister
+		color: $dangerColor
+		font-size: 10px
+		margin-left: 5px
+		display: block
+
+
+/*  FORMULARIO  */
+.container
+	form
+		&.register-login
+			padding: none
+			background: #ffffff
+			display: block
+			border: 2px solid rgba(#000, 0.1)
+			width: 45%
+			margin: 15% auto
+			display: flex
+			flex-direction: column
+			justify-content: center
+			border-top: 4px solid $successColor
+			.head
+				padding: 10px
+				font-size: 26px
+				background: #ffffff
+			.title
+				padding-top: 10px
+				padding-left: 10px
+				padding-right: 10px
+				padding-bottom: 5px
+				border-bottom: 3px solid rgba(#000, 0.1)
+				font-size: 22px
+				display: block
+				text-align: center
+				width: 80%
+				margin: auto
+			.groups
+				width: 80%
+				margin: 10% auto
+				.group
+					display: flex
+					flex-direction: row
+					align-items: center
+					margin-bottom: 10px
+					.icon
+						color: #ffffff
+						padding: 10px
+						background: $primaryColor
+						border: none
+					input
+						padding: 5px
+						border: 2px solid rgba(#000, 0.1)
+						width: 100%
+
+@media screen and (max-width: 1200px)
+	.container
+		form
+			&.register-login
+				width: 60%
+
+@media screen and (max-width: 1000px)
+	.container
+		form
+			&.register-login
+				width: 70%

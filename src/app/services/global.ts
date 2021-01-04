@@ -1,3 +1,3 @@
 export var Global = {
-	url: "http://localhost:3700/"
+	url: "https://git.heroku.com/app-red-social-mean.git/"
 }

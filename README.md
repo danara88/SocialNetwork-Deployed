@@ -1,27 +1,12 @@
-# Client
+## Project Url :point_down: :point_down: :point_down:
+This is the deployed project where you can access directly and test the app:
+https://danara88.github.io/SocialNetwork-Deployed/register
 
-This project was generated with [Angular CLI](https://github.com/angular/angular-cli) version 8.3.24.
+## What is this web app about :question:
+This is a social media web app (Twitter replica). In this app ypu can upload posts, images, messages and you can follow users that are registered in the platform.
 
-## Development server
+## What technologies did I use :question:
+Well, I created this app to put in practise knowledge related with **Angular**, **Nodejs**, **Express**, **MongoDb** and using **Html 5**. I implemented an API REST at the backend to consume the data. 
 
-Run `ng serve` for a dev server. Navigate to `http://localhost:4200/`. The app will automatically reload if you change any of the source files.
-
-## Code scaffolding
-
-Run `ng generate component component-name` to generate a new component. You can also use `ng generate directive|pipe|service|class|guard|interface|enum|module`.
-
-## Build
-
-Run `ng build` to build the project. The build artifacts will be stored in the `dist/` directory. Use the `--prod` flag for a production build.
-
-## Running unit tests
-
-Run `ng test` to execute the unit tests via [Karma](https://karma-runner.github.io).
-
-## Running end-to-end tests
-
-Run `ng e2e` to execute the end-to-end tests via [Protractor](http://www.protractortest.org/).
-
-## Further help
-
-To get more help on the Angular CLI use `ng help` or go check out the [Angular CLI README](https://github.com/angular/angular-cli/blob/master/README.md).
+## What I learn in this project :question:
+When I was developing this app, the most difficult part was when I developed the pagination. Then, I learn how to implement a very nice data base architecture.
